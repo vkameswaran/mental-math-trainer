@@ -31,8 +31,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -86,7 +84,7 @@ public class MentalMathTrainer implements Runnable {
         Thread loadingForms = (new Thread(new MentalMathTrainer()));
         loadingForms.start();
 
-        BufferedReader br = new BufferedReader(new FileReader(new File("src/data")));
+        BufferedReader br = new BufferedReader(new FileReader(new File("data")));
         String data = br.readLine();
         String[] records = data.split(":")[2].split(";");
 
@@ -97,7 +95,7 @@ public class MentalMathTrainer implements Runnable {
         rSQ = Integer.parseInt(records[4].split("=")[1]);
         rSR = Integer.parseInt(records[5].split("=")[1]);
         
-        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("src/data")));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("data")));
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 
