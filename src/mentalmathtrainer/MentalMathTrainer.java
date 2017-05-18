@@ -58,6 +58,12 @@ public class MentalMathTrainer implements Runnable {
     public static int rSQ;
     public static int rSR;
 
+    static BufferedWriter bw;
+    static BufferedReader br;
+    static String data;
+    static String[] records;
+
+    @Override
     public void run() {
 
         home = new Home();
@@ -69,7 +75,6 @@ public class MentalMathTrainer implements Runnable {
         rooting = new Rooting();
         settings = new Settings();
         credits = new Credits();
-
         loading.setVisible(false);
         home.setVisible(true);
     }
@@ -78,15 +83,19 @@ public class MentalMathTrainer implements Runnable {
      * @param args the command line arguments
      * @throws java.io.FileNotFoundException
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
 
         loading.setVisible(true);
         Thread loadingForms = (new Thread(new MentalMathTrainer()));
         loadingForms.start();
 
-        BufferedReader br = new BufferedReader(new FileReader(new File("data")));
-        String data = br.readLine();
-        String[] records = data.split(":")[2].split(";");
+        br = new BufferedReader(new FileReader(new File("src/data.txt")));
+        
+        data = br.readLine();
+        System.out.println(data);
+        records = data.split(":")[2].split(";");
+
+        bw = new BufferedWriter(new FileWriter(new File("src/data.txt")));
 
         rSA = Integer.parseInt(records[0].split("=")[1]);
         rSS = Integer.parseInt(records[1].split("=")[1]);
@@ -94,25 +103,20 @@ public class MentalMathTrainer implements Runnable {
         rSD = Integer.parseInt(records[3].split("=")[1]);
         rSQ = Integer.parseInt(records[4].split("=")[1]);
         rSR = Integer.parseInt(records[5].split("=")[1]);
-        
-        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("data")));
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-
             try {
-
+                
                 // Save records to file
                 String save = ":Records:A=" + rSA + ";S=" + rSS + ";M=" + rSM + ";D=" + rSD + ";Q=" + rSQ + ";R=" + rSR + ";:Settings:Key=Value;:";
                 bw.write(save, 0, save.length());
-
+                
                 // Finishing Up
-                br.close();
+                //br.close();
                 bw.close();
-
+                
             } catch (Exception e) {
-                e.printStackTrace();
             }
-
         }));
 
     }
