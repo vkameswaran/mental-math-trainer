@@ -1,1 +1,1 @@
-:Records:A=1;S=2;M=3;D=4;Q=5;R=6;:Settings:Key=Value;:
+:Records:A=0;S=0;M=0;D=0;Q=0;R=0;:Settings:Key=Value;:
